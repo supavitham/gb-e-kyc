@@ -17,7 +17,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: const [
-          Text("test -----"),
+          Text("test app kycccc"),
         ],
       ),
     );
