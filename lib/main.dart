@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gb_e_kyc/screens/e_kyc_screen.dart';
 import 'package:gb_e_kyc/utility/lang/translations.dart';
 import 'package:get/get.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
-void main() {
+Future<void> main() async {
+  configLoading();
+  await dotenv.load(fileName: "assets/.env");
+
+
   runApp(const MyApp());
 }
 
@@ -69,4 +76,25 @@ class MyApp extends StatelessWidget {
 
     );
   }
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..loadingStyle = EasyLoadingStyle.light
+  // ..maskType = EasyLoadingMaskType.custom
+  // ..maskColor = Colors.black.withOpacity(0.1)
+    ..radius = 10
+    ..contentPadding = const EdgeInsets.all(14)
+    ..indicatorWidget = Container(
+      height: 50,
+      width: 50,
+      decoration: const BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
+      child: const LoadingIndicator(
+        indicatorType: Indicator.ballRotateChase,
+        colors: [Color(0xFFFF9F02)],
+        strokeWidth: 4,
+      ),
+    )
+    ..userInteractions = false
+    ..dismissOnTap = false;
 }

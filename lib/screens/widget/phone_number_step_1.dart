@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/utility/format.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +12,9 @@ class PhoneNumberWidget extends StatefulWidget {
 }
 
 class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
+  final _eKYCController = Get.find<EKYCController>();
+
   final _formKeyPhoneNumber = GlobalKey<FormState>();
-  final _cPhoneNumber = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                  controller: _cPhoneNumber,
+                  controller: _eKYCController.cPhoneNumber,
                   maxLength: 12,
                   validator: (v) {
                     if (v!.isEmpty) {
@@ -50,7 +52,9 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                     _formKeyPhoneNumber.currentState!.validate();
                     if (v.length == 12) {
                       FocusScope.of(context).unfocus();
-                      //await autoSubmitPhoneNumber();
+                      if(_formKeyPhoneNumber.currentState!.validate() && _eKYCController.cPhoneNumber.text.length == 12){
+                        await _eKYCController.autoSubmitPhoneNumber();
+                      }
                     }
                   },
                   decoration: InputDecoration(

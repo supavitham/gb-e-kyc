@@ -19,6 +19,21 @@ class Format {
     }
   }
 
+  static String numberStepKYC(StepKYC item) {
+    switch (item) {
+      case StepKYC.one:
+        return "1";
+      case StepKYC.two:
+        return "2";
+      case StepKYC.three:
+        return "3";
+      case StepKYC.four:
+        return "4";
+      case StepKYC.five:
+        return "5";
+    }
+  }
+
   static MaskTextInputFormatter phoneNumber = MaskTextInputFormatter(
     mask: '###-###-####',
     filter: {"#": RegExp(r'[0-9]')},

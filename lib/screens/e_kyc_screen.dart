@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
+import 'package:gb_e_kyc/screens/widget/otp_widget_step_2.dart';
 import 'package:gb_e_kyc/screens/widget/phone_number_step_1.dart';
 import 'package:gb_e_kyc/utility/format.dart';
 import 'package:gb_e_kyc/widgets/buttonCancel.dart';
@@ -83,7 +84,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
             case StepKYC.one:
               return const PhoneNumberWidget();
             case StepKYC.two:
-              return const PhoneNumberWidget();
+              return const OTPWidget();
             case StepKYC.three:
               return const PhoneNumberWidget();
             case StepKYC.four:
@@ -103,7 +104,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
   selectBottomView(StepKYC step) {
     switch (step) {
       case StepKYC.one:
-        return  Container(
+        return Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Colors.grey[300]!))),
           child: Row(children: [
@@ -125,35 +126,32 @@ class _EKYCScreenState extends State<EKYCScreen> {
           ]),
         );
       case StepKYC.two:
-        return "OTP";
+        return Text("asdas");
       case StepKYC.three:
-        return "data";
+        return Text("asdas");
       case StepKYC.four:
-        return "pin";
+        return Text("asdas");
       case StepKYC.five:
-        return "KYC";
+        return Text("asdas");
     }
   }
 
   Widget _buildWidgetStep(StepKYC e) {
     return Obx(() {
       var item;
-      var checkItem = _eKYCController.processStepKYC
-          .where((element) => element.select == e)
-          .isNotEmpty;
+      var checkItem = _eKYCController.processStepKYC.where((element) => element.select == e).isNotEmpty;
       if (checkItem) {
-        item =
-            _eKYCController.processStepKYC.firstWhere((p0) => p0.select == e);
+        item = _eKYCController.processStepKYC.firstWhere((p0) => p0.select == e);
       }
       return !checkItem
           ? _buildUnselectedStep()
           : !item.statusDone
-              ? _buildSelectedStep()
+              ? _buildSelectedStep(e)
               : _buildDoneStep();
     });
   }
 
-  Widget _buildSelectedStep() {
+  Widget _buildSelectedStep(StepKYC e) {
     return Container(
       width: 32,
       height: 32,
@@ -164,10 +162,10 @@ class _EKYCScreenState extends State<EKYCScreen> {
           Color.fromRGBO(16, 107, 171, 1),
         ]),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
-          "1",
-          style: TextStyle(
+          Format.numberStepKYC(e),
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -188,8 +186,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
           Color.fromRGBO(16, 107, 171, 1),
         ]),
       ),
-      child:
-          const Center(child: Icon(Icons.check, color: Colors.white, size: 16)),
+      child: const Center(child: Icon(Icons.check, color: Colors.white, size: 16)),
     );
   }
 
@@ -199,8 +196,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
       height: 22,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border:
-            Border.all(width: 1, color: const Color.fromRGBO(2, 65, 109, 1)),
+        border: Border.all(width: 1, color: const Color.fromRGBO(2, 65, 109, 1)),
         color: Colors.white,
       ),
     );
