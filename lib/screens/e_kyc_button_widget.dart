@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gb_e_kyc/e_kyc_screen.dart';
+import 'package:gb_e_kyc/screens/e_kyc_screen.dart';
 
 class EKYCButtonWidget extends StatefulWidget {
   const EKYCButtonWidget({Key? key}) : super(key: key);
