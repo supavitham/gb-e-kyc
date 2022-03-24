@@ -4,6 +4,7 @@ Map<String, String> th() {
     "screen": "หน้าจอ",
     "register": "สมัครสมาชิก",
     "back": "ย้อนกลับ",
+    "language": "th",
 
   };
 }

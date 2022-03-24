@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "166472686541",
+    "project_id": "e-kyc-584c8",
+    "storage_bucket": "e-kyc-584c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166472686541:android:3318dcf38b404a042b8284",
+        "android_client_info": {
+          "package_name": "com.gb_e_kyc.gb_e_kyc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166472686541-s0798f3u6di7su634rtdfevl97ho44v4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ9urh2DVh1Hh4V6MV_2SnbFGNCKGwFSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166472686541-s0798f3u6di7su634rtdfevl97ho44v4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "166472686541-bmccmcnoe3n1v49ilcf5kuah8q1lru21.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gbekyc.gbEKyc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,5 +4,7 @@ Map<String, String> en() {
     "screen": "screen",
     "register": "register",
     "back": "Back",
+    "language": "en",
+
   };
 }

@@ -48,7 +48,7 @@ class _OTPWidgetState extends State<OTPWidget> {
             '${'enter_pin_sent_phone'.tr} ${_eKYCController.cPhoneNumber.text}',
             style: const TextStyle(color: Colors.black54, fontSize: 16),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Form(
             key: _formKeyOTP,
             child: PinCodeTextField(

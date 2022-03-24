@@ -6,9 +6,12 @@ import 'package:gb_e_kyc/screens/e_kyc_screen.dart';
 import 'package:gb_e_kyc/utility/lang/translations.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   configLoading();
+  await Firebase.initializeApp();
   await dotenv.load(fileName: "assets/.env");
 
 
