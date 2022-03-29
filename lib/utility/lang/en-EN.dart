@@ -5,6 +5,7 @@ Map<String, String> en() {
     "register": "register",
     "back": "Back",
     "language": "en",
+    "lang": "",
 
   };
 }

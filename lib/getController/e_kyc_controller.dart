@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gb_e_kyc/api/httpClient/pathUrl.dart';
-import 'package:gb_e_kyc/api/post.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-enum StepKYC { one, two, three, four, five }
+enum StepKYC { one, two, three, four }
 
 class SelectStepKYC {
   late StepKYC select;
@@ -20,10 +18,11 @@ class SelectStepKYC {
 
 class EKYCController extends GetxController {
   final cPhoneNumber = TextEditingController();
-  final cOTP = TextEditingController();
+  final cPin = TextEditingController();
+
   late StreamController<ErrorAnimationType> errorController;
 
-  var selectStepKYC = StepKYC.one.obs;
+  var selectStepKYC = StepKYC.four.obs;
   var processStepKYC = <SelectStepKYC>[].obs;
   var hasErrorOTP = false.obs;
   var expiration = true.obs;
@@ -32,6 +31,19 @@ class EKYCController extends GetxController {
   var sendOtpId = ''.obs;
 
   DateTime? datetimeOTP;
+
+  setPinStep4() {
+    if (processStepKYC.where((element) => element.select == StepKYC.four).isEmpty) {
+      // update status step 3
+      processStepKYC.firstWhere((p0) => p0.select == StepKYC.three).statusDone = true;
+      // next step 4
+      SelectStepKYC newSelectStepKYC = SelectStepKYC();
+      newSelectStepKYC.select = StepKYC.four;
+      newSelectStepKYC.statusDone = false;
+      selectStepKYC.value = StepKYC.four;
+      processStepKYC.add(newSelectStepKYC);
+    }
+  }
 
   @override
   void onInit() {

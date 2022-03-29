@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/getController/information_controller.dart';
+import 'package:gb_e_kyc/getController/kyc_controller.dart';
 import 'package:gb_e_kyc/screens/widget/information_widget_step_3.dart';
+import 'package:gb_e_kyc/screens/widget/kyc_widget_step_4.dart';
 import 'package:gb_e_kyc/screens/widget/otp_widget_step_2.dart';
 import 'package:gb_e_kyc/screens/widget/phone_number_step_1.dart';
 import 'package:gb_e_kyc/utility/format.dart';
@@ -22,7 +25,16 @@ class EKYCScreen extends StatefulWidget {
 class _EKYCScreenState extends State<EKYCScreen> {
   final _eKYCController = Get.put(EKYCController());
   final _infoController = Get.put(InformationController());
+  final _kycController = Get.put(KYCController());
 
+  Timer? _timer;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    // WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -35,7 +47,10 @@ class _EKYCScreenState extends State<EKYCScreen> {
             style: const TextStyle(color: Colors.black),
           ),
           leading: BackButton(
-            onPressed: () {},
+            onPressed: () {
+              var nowStep = _eKYCController.selectStepKYC.value;
+              return onBackButton(nowStep);
+            },
             color: Colors.black,
           ),
           bottom: PreferredSize(
@@ -94,9 +109,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
             case StepKYC.three:
               return const InformationWidget();
             case StepKYC.four:
-              return const PhoneNumberWidget();
-            case StepKYC.five:
-              return const PhoneNumberWidget();
+              return const KYCWidget();
           }
         }),
         bottomNavigationBar: Obx(() {
@@ -105,6 +118,42 @@ class _EKYCScreenState extends State<EKYCScreen> {
         }),
       ),
     );
+  }
+
+  onBackButton(StepKYC nowStep) {
+    switch (nowStep) {
+      case StepKYC.one:
+        {
+          break;
+        }
+      case StepKYC.two:
+        {
+          // remove step 2
+          _eKYCController.processStepKYC.removeWhere((element) => element.select == nowStep);
+          // update status step 1
+          _eKYCController.processStepKYC.firstWhere((p0) => p0.select == StepKYC.one).statusDone = false;
+          _eKYCController.selectStepKYC.value = StepKYC.one;
+          break;
+        }
+      case StepKYC.three:
+        {
+          // remove step 3
+          _eKYCController.processStepKYC.removeWhere((element) => element.select == nowStep);
+          // update status step 2
+          _eKYCController.processStepKYC.firstWhere((p0) => p0.select == StepKYC.two).statusDone = false;
+          _eKYCController.selectStepKYC.value = StepKYC.two;
+          break;
+        }
+      case StepKYC.four:
+        {
+          // remove step 4
+          _eKYCController.processStepKYC.removeWhere((element) => element.select == nowStep);
+          // update status step 3
+          _eKYCController.processStepKYC.firstWhere((p0) => p0.select == StepKYC.three).statusDone = false;
+          _eKYCController.selectStepKYC.value = StepKYC.three;
+          break;
+        }
+    }
   }
 
   selectBottomView(StepKYC step) {
@@ -142,7 +191,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
                 child: ButtonCancel(
                   text: 'back'.tr,
                   onPressed: () {
-                    _eKYCController.cOTP.clear();
+                    // cOTP.clear();
                     _eKYCController.cPhoneNumber.clear();
                     _eKYCController.hasErrorOTP.value = false;
                     // back step 1
@@ -215,8 +264,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
                               _infoController.ocrFailedAll.value = data['ocrFailedAll'];
                               _infoController.acceptScanCardIDWidget.value = false;
                             }
-                          } catch (e, s) {
-                            print("SSSSS $s");
+                          } catch (e) {
                           }
                         });
                       },
@@ -226,9 +274,63 @@ class _EKYCScreenState extends State<EKYCScreen> {
               )
             : SizedBox();
       case StepKYC.four:
-        return SizedBox();
-      case StepKYC.five:
-        return Text("asdas");
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+          decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Colors.grey[300]!))),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF115899),
+                      Color(0xFF02416D),
+                    ],
+                  ),
+                ),
+                child: MaterialButton(
+                  onPressed: () async {
+                    _timer?.cancel();
+                    // setState(() => isLoading = true);
+                    _kycController.isLoading.value = true;
+                    _kycController.getLivenessFacetec();
+
+                    if (Platform.isIOS) {
+                      print(">>>>>>> ios");
+                      Future.delayed(Duration(seconds: 50), () {
+                        print(">>>>>>> 50");
+                        // setState(() => _kycController.isLoading.value = false);
+                        _kycController.isLoading.value = false;
+                      });
+                    }
+                    _timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+                      // print(">>>>>>> 333333");
+                      if (_kycController.isSuccess.value)
+                        _timer?.cancel();
+                      // else
+                        // _kycController.getResultFacetec();
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.photo_camera_outlined, color: Colors.white),
+                      SizedBox(width: 10),
+                      Text(
+                        'camera'.tr,
+                        style: TextStyle(fontSize: 17, color: Colors.white),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ]),
+        );
     }
   }
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gb_e_kyc/api/get.dart';
 import 'package:gb_e_kyc/api/httpClient/pathUrl.dart';
 import 'package:gb_e_kyc/api/post.dart';
@@ -18,6 +17,7 @@ import 'package:gb_e_kyc/widgets/selectAddress.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,7 @@ class PersonalInfo extends StatefulWidget {
   final Function? setIndex;
   final Function? setDataVisible;
   final Function? setScanIDVisible;
-  final Function? setPinVisible;
+  final Function? setnextStepKYC;
   final Function? setFirstName;
   final Function? setLastName;
   final Function? setAddress;
@@ -53,7 +53,7 @@ class PersonalInfo extends StatefulWidget {
     this.person,
     this.setDataVisible,
     this.setScanIDVisible,
-    this.setPinVisible,
+    this.setnextStepKYC,
     this.setIndex,
     this.setCareerID,
     this.setWorkAddress,
@@ -204,14 +204,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
         if (RegExp(filterProvince.replaceAll('จ.', '')).hasMatch(e['name_th'])) {
           print(e);
           int provinceID = e['id'];
-          String province = e['name${'lang'.tr}'];
+          String? province = e['name${'lang'.tr}'];
           dataDistrict.forEach((e) {
-            if ((RegExp(filterDistrict.replaceAll('อ.', '')).hasMatch(e['name_th']) ||
-                RegExp(filterDistrict.replaceAll('เขต', '')).hasMatch(e['name_th'])) &&
-                e['province_id'] == provinceID) {
+            if ((RegExp(filterDistrict.replaceAll('อ.', '')).hasMatch(e['name_th']) || RegExp(filterDistrict.replaceAll('เขต', '')).hasMatch(e['name_th'])) && e['province_id'] == provinceID) {
               print(e);
               int codeDistrict = e['code'];
-              String district = e['name${'lang'.tr}'];
+              String? district = e['name${'lang'.tr}'];
               dataSubDistrict.forEach((e) {
                 if (RegExp(filterSubDistrict).hasMatch(e['name_th']) && e['code'].toString().substring(0, 4) == codeDistrict.toString()) {
                   print(e);
@@ -248,94 +246,91 @@ class _PersonalInfoState extends State<PersonalInfo> {
     showCupertinoModalPopup(
         context: context,
         builder: (_) => Container(
-          height: 270,
-          alignment: Alignment.center,
-          color: Colors.white,
-          child: Column(mainAxisSize: MainAxisSize.max, children: [
-            ButtonConfirm(
-              text: 'ok'.tr,
-              radius: 0,
-              onPressed: () {
-                birthdayController.text = textBirthday!;
-                _formKey.currentState!.validate();
-                Navigator.of(context).pop();
-              },
-            ),
-            Container(
-              height: 220,
-              child: CupertinoDatePicker(
-                initialDateTime: DateTime.now(),
-                mode: CupertinoDatePickerMode.date,
-                minimumYear: 1900,
-                maximumYear: DateTime.now().year,
-                onDateTimeChanged: (v) {
-                  textBirthday = DateFormat('dd/MM/yyyy').format(v);
-                },
-              ),
-            ),
-          ]),
-        ));
+              height: 270,
+              alignment: Alignment.center,
+              color: Colors.white,
+              child: Column(mainAxisSize: MainAxisSize.max, children: [
+                ButtonConfirm(
+                  text: 'ok'.tr,
+                  radius: 0,
+                  onPressed: () {
+                    birthdayController.text = textBirthday!;
+                    _formKey.currentState!.validate();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                Container(
+                  height: 220,
+                  child: CupertinoDatePicker(
+                    initialDateTime: DateTime.now(),
+                    mode: CupertinoDatePickerMode.date,
+                    minimumYear: 1900,
+                    maximumYear: DateTime.now().year,
+                    onDateTimeChanged: (v) {
+                      textBirthday = DateFormat('dd/MM/yyyy').format(v);
+                    },
+                  ),
+                ),
+              ]),
+            ));
   }
 
   Widget workLable() {
     return (!skipInfomation!)
         ? Column(children: [
-      SizedBox(height: 20),
-      TextFormField(
-        controller: workNameController,
-        style: TextStyle(fontSize: 15),
-        validator: (v) {
-          if (v!.isEmpty && checkValidate) return 'please_enter'.tr;
-          return null;
-        },
-        onChanged: (v) {
-          _formKey.currentState!.validate();
-          widget.setWorkName!(v);
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(labelText: 'careername'.tr),
-      ),
-      SizedBox(height: 20),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-              child: TextFormField(
-                  controller: workAddressShowController,
-                  readOnly: true,
-                  style: TextStyle(fontSize: 15),
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      labelText: "district_address".tr,
-                      hintText: "district_address".tr,
-                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black54)),
-                  validator: (v) {
-                    if (v!.isEmpty && checkValidate) {
-                      return 'please_enter'.tr;
-                    }
-                    return null;
-                  },
-                  onChanged: (v) => _formKey.currentState!.validate(),
-                  onTap: () => showModalSearchAddress('workAddress')))
-        ],
-      ),
-      SizedBox(height: 20),
-      TextFormField(
-        controller: workAddressController,
-        style: TextStyle(fontSize: 15),
-        validator: (v) {
-          if (v!.isEmpty && checkValidate) return 'please_enter'.tr;
-          return null;
-        },
-        onChanged: (v) {
-          _formKey.currentState!.validate();
-          widget.setWorkAddress!(v);
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(labelText: 'addresscareer'.tr, hintText: 'house_number_floor_village_road'.tr),
-      ),
-    ])
+            SizedBox(height: 20),
+            TextFormField(
+              controller: workNameController,
+              style: TextStyle(fontSize: 15),
+              validator: (v) {
+                if (v!.isEmpty && checkValidate) return 'please_enter'.tr;
+                return null;
+              },
+              onChanged: (v) {
+                _formKey.currentState!.validate();
+                widget.setWorkName!(v);
+              },
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: 'careername'.tr),
+            ),
+            SizedBox(height: 20),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                    child: TextFormField(
+                        controller: workAddressShowController,
+                        readOnly: true,
+                        style: TextStyle(fontSize: 15),
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(labelText: "district_address".tr, hintText: "district_address".tr, suffixIcon: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black54)),
+                        validator: (v) {
+                          if (v!.isEmpty && checkValidate) {
+                            return 'please_enter'.tr;
+                          }
+                          return null;
+                        },
+                        onChanged: (v) => _formKey.currentState!.validate(),
+                        onTap: () => showModalSearchAddress('workAddress')))
+              ],
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+              controller: workAddressController,
+              style: TextStyle(fontSize: 15),
+              validator: (v) {
+                if (v!.isEmpty && checkValidate) return 'please_enter'.tr;
+                return null;
+              },
+              onChanged: (v) {
+                _formKey.currentState!.validate();
+                widget.setWorkAddress!(v);
+              },
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: 'addresscareer'.tr, hintText: 'house_number_floor_village_road'.tr),
+            ),
+          ])
         : SizedBox();
   }
 
@@ -392,12 +387,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               widget.setCareerID!(indexCareer);
                             },
                             items: data))),
-                indexCareer != null
-                    ? Positioned(
-                    top: 10,
-                    left: 10,
-                    child: Text(' ${"titlecareer".tr} ', style: TextStyle(fontSize: 12, color: Colors.black54, backgroundColor: Colors.white)))
-                    : SizedBox()
+                indexCareer != null ? Positioned(top: 10, left: 10, child: Text(' ${"titlecareer".tr} ', style: TextStyle(fontSize: 12, color: Colors.black54, backgroundColor: Colors.white))) : SizedBox()
               ]);
             }
           }
@@ -458,13 +448,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               });
                             },
                             items: data))),
-                indexCareerChild != null
-                    ? Positioned(
-                    top: 10,
-                    left: 10,
-                    child: Text(' ${"career_more_choice".tr} ',
-                        style: TextStyle(fontSize: 12, color: Colors.black54, backgroundColor: Colors.white)))
-                    : SizedBox()
+                indexCareerChild != null ? Positioned(top: 10, left: 10, child: Text(' ${"career_more_choice".tr} ', style: TextStyle(fontSize: 12, color: Colors.black54, backgroundColor: Colors.white))) : SizedBox()
               ]);
             }
             return SizedBox();
@@ -478,6 +462,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void showModalSearchAddress(String from) {
     context.read<AddressBloc>().add(ClearDistrict());
     context.read<AddressBloc>().add(ClearSubDistrict());
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -488,16 +473,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
         _formKey.currentState!.validate();
         from == 'address'
             ? setState(() {
-          addressShowController.text = v['showAddress'];
-          widget.setindexProvince!(v['indexProvince']);
-          widget.setindexDistric!(v['indexDistrict']);
-          widget.setindexSubDistric!(v['indexSubDistrict']);
-          widget.setAddressSearch!(v['showAddress']);
-        })
+                addressShowController.text = v['showAddress'];
+                widget.setindexProvince!(v['indexProvince']);
+                widget.setindexDistric!(v['indexDistrict']);
+                widget.setindexSubDistric!(v['indexSubDistrict']);
+                widget.setAddressSearch!(v['showAddress']);
+              })
             : setState(() {
-          workAddressShowController.text = v['showAddress'];
-          widget.setWorkAddressSearch!(v['showAddress']);
-        });
+                workAddressShowController.text = v['showAddress'];
+                widget.setWorkAddressSearch!(v['showAddress']);
+              });
       }
     });
   }
@@ -506,10 +491,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     return Padding(
         padding: const EdgeInsets.all(20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('idcard'.tr, style: TextStyle(fontSize: 24)),
-            Text('${"Scan_result".tr} $ocrResultStatus', style: TextStyle(fontSize: 18))
-          ]),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('idcard'.tr, style: TextStyle(fontSize: 24)), Text('${"Scan_result".tr} $ocrResultStatus', style: TextStyle(fontSize: 18))]),
           Text('about_profile'.tr, style: TextStyle(color: Colors.black54, fontSize: 16)),
           SizedBox(height: 20),
           Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
@@ -616,10 +598,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       return null;
                     },
                     onChanged: (v) => _formKey.currentState!.validate(),
-                    decoration: InputDecoration(
-                        fillColor: widget.ocrAllFailed ? Colors.white : Colors.grey[200],
-                        labelText: 'birthday'.tr,
-                        suffixIcon: Icon(Icons.calendar_today, color: Colors.black54)))),
+                    decoration: InputDecoration(fillColor: widget.ocrAllFailed ? Colors.white : Colors.grey[200], labelText: 'birthday'.tr, suffixIcon: Icon(Icons.calendar_today, color: Colors.black54)))),
             SizedBox(width: 20),
             Expanded(
               child: TextFormField(
@@ -693,8 +672,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => CameraScanIDCard(titleAppbar: 'Front_ID_Card'.tr, enableButton: true, isFront: true, noFrame: false)),
+                    MaterialPageRoute(builder: (context) => CameraScanIDCard(titleAppbar: 'Front_ID_Card'.tr, enableButton: true, isFront: true, noFrame: false)),
                   ).then((v) async {
                     if (v != null) {
                       int fileSize = await getFileSize(filepath: v);
@@ -706,8 +684,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           barrierDismissible: true,
                           context: context,
                           builder: (context) {
-                            return DeleteDialog(
-                                title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
+                            return DeleteDialog(title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
                           },
                         );
                       } else if (fileSize > 10000000) {
@@ -727,9 +704,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 child: Container(
                   height: 102,
                   width: 143,
-                  child: frontIDCardImage.isEmpty
-                      ? Image.asset(cameraImage, scale: 3)
-                      : Image.file(File(frontIDCardImage), width: 143, fit: BoxFit.cover),
+                  child: frontIDCardImage.isEmpty ? Image.asset(cameraImage, scale: 3) : Image.file(File(frontIDCardImage), width: 143, fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -769,8 +744,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           barrierDismissible: true,
                           context: context,
                           builder: (context) {
-                            return DeleteDialog(
-                                title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
+                            return DeleteDialog(title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
                           },
                         );
                       } else if (fileSize > 10000000) {
@@ -787,12 +761,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     }
                   });
                 },
-                child: Container(
-                    height: 102,
-                    width: 143,
-                    child: backIDCardImage.isEmpty
-                        ? Image.asset(cameraImage, scale: 3)
-                        : Image.file(File(backIDCardImage), width: 143, fit: BoxFit.cover)),
+                child: Container(height: 102, width: 143, child: backIDCardImage.isEmpty ? Image.asset(cameraImage, scale: 3) : Image.file(File(backIDCardImage), width: 143, fit: BoxFit.cover)),
               ),
             ),
           )
@@ -831,8 +800,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           barrierDismissible: true,
                           context: context,
                           builder: (context) {
-                            return DeleteDialog(
-                                title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
+                            return DeleteDialog(title: "Extension_not_correct".tr, textConfirm: "ok".tr, onPressedConfirm: () => Navigator.pop(context));
                           },
                         );
                       } else if (fileSize > 10000000) {
@@ -964,8 +932,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       widget.setLaserCode!(laserCodeController.text.replaceAll('-', ''));
 
                       // widget.setDataVisible(false);
-                      widget.setPinVisible!(true);
-                      widget.setIndex!(3);
+                      widget.setnextStepKYC!(true);
+                      // widget.setIndex!(3);
                     }
                   }
                 }

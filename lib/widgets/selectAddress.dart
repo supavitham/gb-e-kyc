@@ -84,9 +84,11 @@ class _SelectAddressState extends State<SelectAddress> with TickerProviderStateM
             controller: _tabBar,
             children: [
               BlocBuilder<AddressBloc, Map>(builder: (_, data) {
+                print("pppppppp ${data['province']}");
                 return ListView.builder(
                   itemCount: data['province'].length,
                   itemBuilder: (BuildContext context, int index) {
+                    print("pppppppp ${data['province']}");
                     return ListTile(
                       title: Text(data['province'][index]['name${'lang'.tr}']),
                       selected: index == _selectedProvince,

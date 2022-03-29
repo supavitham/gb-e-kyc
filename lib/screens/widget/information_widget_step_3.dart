@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/getController/information_controller.dart';
 import 'package:gb_e_kyc/screens/widget/personalInfo.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class InformationWidget extends StatefulWidget {
 }
 
 class _InformationWidgetState extends State<InformationWidget> {
+  final _eKYCController = Get.find<EKYCController>();
   final _infoController = Get.find<InformationController>();
 
   @override
@@ -57,7 +59,7 @@ class _InformationWidgetState extends State<InformationWidget> {
               ocrAllFailed: _infoController.ocrFailedAll.value,
               person: _infoController.personalInfo.value,
               // setDataVisible: _infoController.setDataVisible,
-              // setPinVisible:_infoController.setPinVisible,
+              setnextStepKYC: _infoController.verifyStepInfo,
               // setIndex: _infoController.setSelectedStep,
               setFirstName: _infoController.setFirstName,
               setLastName: _infoController.setLastName,

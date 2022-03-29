@@ -13,8 +13,6 @@ class Format {
       case StepKYC.three:
         return "data";
       case StepKYC.four:
-        return "pin";
-      case StepKYC.five:
         return "KYC";
     }
   }
@@ -29,8 +27,6 @@ class Format {
         return "3";
       case StepKYC.four:
         return "4";
-      case StepKYC.five:
-        return "5";
     }
   }
 

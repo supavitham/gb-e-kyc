@@ -14,7 +14,15 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		9AFEAEA927EC75D000F3E9EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AFEAEA827EC75D000F3E9EF /* GoogleService-Info.plist */; };
+		9A17B36427F166050046725A /* LivenessCheckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36327F166050046725A /* LivenessCheckProcessor.swift */; };
+		9A17B36627F1662B0046725A /* ProcesingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36527F1662B0046725A /* ProcesingDelegate.swift */; };
+		9A17B36827F166640046725A /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36727F166640046725A /* ThemeHelpers.swift */; };
+		9A68DBBC27EDB0E900ED3211 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A68DBBB27EDB0E900ED3211 /* Config.swift */; };
+		9A68DBC027EDB16D00ED3211 /* SampleAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A68DBBF27EDB16D00ED3211 /* SampleAppViewController.swift */; };
+		9AAA95EB27F1676C00FD18E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */; };
+		9ACB042B27EDC700008B25DC /* FaceTecSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */; };
+		9ACB042C27EDC700008B25DC /* FaceTecSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9ACB042F27EDCCDC008B25DC /* Processors in Resources */ = {isa = PBXBuildFile; fileRef = 9ACB042E27EDCCDC008B25DC /* Processors */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,6 +32,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9ACB042C27EDC700008B25DC /* FaceTecSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,7 +55,15 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9AFEAEA827EC75D000F3E9EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9A17B36327F166050046725A /* LivenessCheckProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LivenessCheckProcessor.swift; path = Runner/Processors/LivenessCheckProcessor.swift; sourceTree = "<group>"; };
+		9A17B36527F1662B0046725A /* ProcesingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProcesingDelegate.swift; path = Runner/Processors/ProcesingDelegate.swift; sourceTree = "<group>"; };
+		9A17B36727F166640046725A /* ThemeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThemeHelpers.swift; path = Runner/Processors/Helpers/ThemeHelpers.swift; sourceTree = "<group>"; };
+		9A68DBBB27EDB0E900ED3211 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		9A68DBBF27EDB16D00ED3211 /* SampleAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppViewController.swift; sourceTree = "<group>"; };
+		9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FaceTecSDK.framework; sourceTree = "<group>"; };
+		9ACB042D27EDCBDE008B25DC /* Runner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		9ACB042E27EDCCDC008B25DC /* Processors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Processors; sourceTree = "<group>"; };
 		B999A59DC7CC8CA636318A27 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		D3A61C11B06FB240F6837300 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -57,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6011E6CAB93624752CE51BE2 /* Pods_Runner.framework in Frameworks */,
+				9ACB042B27EDC700008B25DC /* FaceTecSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +113,10 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				9A17B36727F166640046725A /* ThemeHelpers.swift */,
+				9A17B36527F1662B0046725A /* ProcesingDelegate.swift */,
+				9A17B36327F166050046725A /* LivenessCheckProcessor.swift */,
+				9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -114,7 +136,9 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				9AFEAEA827EC75D000F3E9EF /* GoogleService-Info.plist */,
+				9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */,
+				9ACB042E27EDCCDC008B25DC /* Processors */,
+				9ACB042D27EDCBDE008B25DC /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -123,6 +147,8 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				9A68DBBB27EDB0E900ED3211 /* Config.swift */,
+				9A68DBBF27EDB16D00ED3211 /* SampleAppViewController.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -193,9 +219,10 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				9AFEAEA927EC75D000F3E9EF /* GoogleService-Info.plist in Resources */,
+				9ACB042F27EDCCDC008B25DC /* Processors in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				9AAA95EB27F1676C00FD18E4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +241,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
 		6C9ACA9C4CABA2A846C51856 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -267,7 +294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 		EDF817BA78532DE687DEF186 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -293,8 +320,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A17B36827F166640046725A /* ThemeHelpers.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				9A17B36427F166050046725A /* LivenessCheckProcessor.swift in Sources */,
+				9A17B36627F1662B0046725A /* ProcesingDelegate.swift in Sources */,
+				9A68DBC027EDB16D00ED3211 /* SampleAppViewController.swift in Sources */,
+				9A68DBBC27EDB0E900ED3211 /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +394,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -380,7 +412,12 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 2X2R4XF983;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -441,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -491,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -511,7 +548,12 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 2X2R4XF983;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,7 +576,12 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 2X2R4XF983;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

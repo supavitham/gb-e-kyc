@@ -26,7 +26,7 @@ dependencies:
   firebase_core: ^1.13.1
   get: ^4.6.1
   google_ml_kit: ^0.7.2
-  http: ^0.13.4
+  http: ^0.13.3
   http_interceptor: ^1.0.2
   intl: ^0.17.0
   mask_text_input_formatter: ^2.1.0
@@ -53,4 +53,5 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/thai-province-data.json      
     - .env
