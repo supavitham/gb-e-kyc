@@ -193,8 +193,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     List dataProvince = address['province'];
     List dataDistrict = address['district'];
     List dataSubDistrict = address['sub_district'];
-
-    if (widget.person!.filterAddress!.isNotEmpty) {
+    if (widget.person?.filterAddress != null) {
       List filter = widget.person!.filterAddress!.split(' ');
       String filterProvince = filter[2];
       String filterDistrict = filter[1];
@@ -511,7 +510,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           InformationController().setFirstName(v);
                         },
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(labelText: 'name'.tr)))),
+                        decoration: InputDecoration(labelText: 'first_name'.tr)))),
             SizedBox(width: 20),
             Expanded(
                 child: Container(
@@ -529,7 +528,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           InformationController().setLastName(v);
                         },
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(labelText: 'nickname'.tr))))
+                        decoration: InputDecoration(labelText: 'last_name'.tr))))
           ]),
           SizedBox(height: 20),
           Row(

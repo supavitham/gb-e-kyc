@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gb_e_kyc/api/httpClient/pathUrl.dart';
 import 'package:gb_e_kyc/api/post.dart';
-import 'package:gb_e_kyc/api/storeState.dart';
-import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/getController/information_controller.dart';
 import 'package:gb_e_kyc/screens/dialog/dialogKYCFail.dart';
 import 'package:gb_e_kyc/widgets/dialog/customDialog.dart';
@@ -18,7 +15,6 @@ import 'package:path_provider/path_provider.dart';
 
 class KYCController extends GetxController {
   final _infoController = Get.put(InformationController());
-  final _eKycController = Get.put(EKYCController());
 
   static const facetecChannel = const MethodChannel('GBWallet');
 
@@ -29,7 +25,6 @@ class KYCController extends GetxController {
   File? imgLiveness;
 
   getLivenessFacetec() async {
-    print("DDDD ${Get.locale.toString()}");
     try {
       isSuccess.value = false;
       await facetecChannel.invokeMethod<String>(
@@ -57,21 +52,9 @@ class KYCController extends GetxController {
   getResultFacetec() async {
     try {
       isSuccess.value = await facetecChannel.invokeMethod('getResultFacetec');
-      print("getResultFacetec ${isSuccess.value}");
       if (isSuccess.value) {
-        // setState(() => isLoading = true);
         isLoading.value = true;
         await getImageFacetec();
-        print("face_image >>>> ${imgLiveness}");
-        print("face_image >>>> ${imgLiveness.runtimeType}");
-
-        // print("--------- >>>> ${imgLiveness?.readAsBytesSync()}");
-
-        print("card_image >>>> ${_infoController.imgFrontIDCard}");
-        print("card_image >>>> ${_infoController.imgFrontIDCardBytes}");
-
-        print("id_card >>>> ${_infoController.idCardController.text}");
-        // print("-------- >>>> ${_infoController.imgFrontIDCard?.readAsBytesSync()}");
 
         final res = await PostAPI().callFormData(
           closeLoading: true,
@@ -134,16 +117,11 @@ class KYCController extends GetxController {
                 avatar: false,
                 onPressedConfirm: () {
                   Navigator.pop(context);
-                  // setState(() {
-                  //   selectedStep = 2;
-                  //   _kycVisible = false;
-                  // });
                 },
               ),
             );
           }
         } else {
-          // setState(() => isLoading = false);
           isLoading.value = false;
           failFaceMatch++;
           if (failFaceMatch.value > 2) {
@@ -167,9 +145,8 @@ class KYCController extends GetxController {
       }
     } on PlatformException catch (e) {
       debugPrint("Failed to get : '${e.message}'");
-    } catch (e,s){
-      print("eeeee $e");
-      print("SSSSS $s");
+    } catch (e){
+      print("getResultFacetec : $e");
     }
   }
 }

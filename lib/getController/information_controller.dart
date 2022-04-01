@@ -41,6 +41,7 @@ class InformationController extends GetxController {
   var fileNameSelfieID = ''.obs;
   var fileNameBackID = ''.obs;
   var fileNameLiveness = ''.obs;
+  var isLoading = false.obs;
 
   setFirstName(String value) => firstNameController.text = value;
 
@@ -77,8 +78,7 @@ class InformationController extends GetxController {
   verifyStepInfo(bool value) async {
     print("verifyStepInfo ");
     if (pathSelfie.isNotEmpty) {
-      EasyLoading.show();
-      // setState(() => isLoading = true);
+      isLoading.value = true;
 
       final resFrontID = await PostAPI().callFormData(
         url: '$hostRegister/users/upload_file',
@@ -129,9 +129,8 @@ class InformationController extends GetxController {
           ),
         );
       } else {
-        // setState(() => isLoading = false);
+        isLoading.value = false;
 
-        EasyLoading.dismiss();
         showDialog(
           barrierDismissible: false,
           context: Get.context!,
@@ -150,7 +149,6 @@ class InformationController extends GetxController {
         );
       }
     } else {
-      print("SSSSSS 2222");
       Get.put(EKYCController()).setPinStep4();
     }
   }

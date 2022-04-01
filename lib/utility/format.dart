@@ -1,4 +1,5 @@
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Format {
@@ -7,11 +8,11 @@ class Format {
   static String nameStepKYC(StepKYC item) {
     switch (item) {
       case StepKYC.one:
-        return "phone_number";
+        return "phone_number".tr;
       case StepKYC.two:
         return "OTP";
       case StepKYC.three:
-        return "data";
+        return "data".tr;
       case StepKYC.four:
         return "KYC";
     }

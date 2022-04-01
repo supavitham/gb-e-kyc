@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gb_e_kyc/api/httpClient/pathUrl.dart';
 import 'package:gb_e_kyc/api/post.dart';
-import 'package:gb_e_kyc/api/storeState.dart';
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/getController/information_controller.dart';
 import 'package:gb_e_kyc/getController/kyc_controller.dart';
@@ -77,27 +76,48 @@ class _EKYCScreenState extends State<EKYCScreen> {
               height: 80,
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Stack(children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 50,
-                  child: const Divider(
-                    color: Color(0xFF02416D),
-                    thickness: 1.5,
-                    height: 30,
-                    indent: 30,
-                    endIndent: 20,
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: StepKYC.values
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  ...StepKYC.values
                       .map((e) => Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                SizedBox(
-                                  height: 33,
-                                  child: _buildWidgetStep(e),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    if (e == StepKYC.one)
+                                      Spacer()
+                                    else
+                                      Expanded(
+                                        child: const Divider(
+                                          color: Color(0xFF02416D),
+                                          thickness: 1.5,
+                                          height: 30,
+                                          indent: 0,
+                                          endIndent: 0,
+                                        ),
+                                      ),
+                                    SizedBox(
+                                      height: 33,
+                                      child: _buildWidgetStep(e),
+                                    ),
+                                    if (e != StepKYC.four)
+                                      Expanded(
+                                        child: const Divider(
+                                          color: Color(0xFF02416D),
+                                          thickness: 1.5,
+                                          height: 30,
+                                          indent: 0,
+                                          endIndent: 0,
+                                        ),
+                                      )
+                                    else
+                                      Spacer()
+                                  ],
                                 ),
                                 const SizedBox(height: 8),
                                 Expanded(
@@ -112,8 +132,8 @@ class _EKYCScreenState extends State<EKYCScreen> {
                             ),
                           ))
                       .toList(),
-                ),
-              ]),
+                ],
+              ),
             ),
           ),
         ),
@@ -196,7 +216,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
             const SizedBox(width: 20),
             Expanded(
               child: ButtonConfirm(
-                text: 'continue111'.tr,
+                text: 'continue'.tr,
                 onPressed: () async {
                   if (_formKeyPhoneNumber.currentState!.validate() && _eKYCController.cPhoneNumber.text.length == 12) {
                     await _eKYCController.autoSubmitPhoneNumber();
@@ -230,7 +250,7 @@ class _EKYCScreenState extends State<EKYCScreen> {
               SizedBox(width: 20),
               Expanded(
                 child: ButtonConfirm(
-                  text: 'continue222'.tr,
+                  text: 'continue'.tr,
                   onPressed: () => _eKYCController.autoSubmitOTP(cOTP.text),
                 ),
               ),
@@ -328,20 +348,15 @@ class _EKYCScreenState extends State<EKYCScreen> {
                       child: MaterialButton(
                         onPressed: () async {
                           _timer?.cancel();
-                          // setState(() => isLoading = true);
                           _kycController.isLoading.value = true;
                           _kycController.getLivenessFacetec();
 
                           if (Platform.isIOS) {
-                            print(">>>>>>> ios");
                             Future.delayed(Duration(seconds: 50), () {
-                              print(">>>>>>> 50");
-                              // setState(() => _kycController.isLoading.value = false);
                               _kycController.isLoading.value = false;
                             });
                           }
                           _timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
-                            // print(">>>>>>> 333333");
                             if (_kycController.isSuccess.value)
                               _timer?.cancel();
                             else
