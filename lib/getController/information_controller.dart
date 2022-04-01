@@ -77,7 +77,6 @@ class InformationController extends GetxController {
   verifyStepInfo(bool value) async {
     print("verifyStepInfo ");
     if (pathSelfie.isNotEmpty) {
-      print("SSSSSS 111");
       EasyLoading.show();
       // setState(() => isLoading = true);
 

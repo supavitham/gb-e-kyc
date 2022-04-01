@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gb_e_kyc/screens/e_kyc_screen.dart';
+import 'package:get/route_manager.dart';
 
 class EKYCButtonWidget extends StatefulWidget {
   const EKYCButtonWidget({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class _EKYCButtonWidgetState extends State<EKYCButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const EKYCScreen())),
+      onTap: () =>  Get.to(EKYCScreen()),
       child: Container(
         // width: 60,
         // height: 80,
