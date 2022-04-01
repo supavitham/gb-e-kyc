@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gb_e_kyc/bloc/addressBloc.dart';
 import 'package:gb_e_kyc/screens/e_kyc_screen.dart';
+import 'package:gb_e_kyc/screens/start_screen.dart';
 import 'package:gb_e_kyc/utility/lang/translations.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -31,10 +32,11 @@ class MyApp extends StatelessWidget {
         title: 'GB E-KYC',
         builder: EasyLoading.init(),
         translations: Messages(),
-        locale: Get.deviceLocale,
+        // locale: Get.deviceLocale,
+        locale: Locale('th', 'TH'),
         fallbackLocale: const Locale('th', 'TH'),
         debugShowCheckedModeBanner: false,
-        home: const EKYCScreen(),
+        home: StartScreen(),
         theme: ThemeData(
           primaryColor: const Color(0xFF02416D),
           colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),

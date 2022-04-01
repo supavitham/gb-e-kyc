@@ -5,7 +5,8 @@ import 'package:gb_e_kyc/utility/format.dart';
 import 'package:get/get.dart';
 
 class PhoneNumberWidget extends StatefulWidget {
-  const PhoneNumberWidget({Key? key}) : super(key: key);
+  final GlobalKey<FormState> formKeyPhoneNumber;
+  const PhoneNumberWidget({Key? key, required this.formKeyPhoneNumber}) : super(key: key);
 
   @override
   State<PhoneNumberWidget> createState() => _PhoneNumberWidgetState();
@@ -14,14 +15,14 @@ class PhoneNumberWidget extends StatefulWidget {
 class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
   final _eKYCController = Get.find<EKYCController>();
 
-  final _formKeyPhoneNumber = GlobalKey<FormState>();
+  // final _formKeyPhoneNumber = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Form(
-        key: _formKeyPhoneNumber,
+        key: widget.formKeyPhoneNumber,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,10 +50,10 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
                     return null;
                   },
                   onChanged: (v) async {
-                    _formKeyPhoneNumber.currentState!.validate();
+                    widget.formKeyPhoneNumber.currentState!.validate();
                     if (v.length == 12) {
                       FocusScope.of(context).unfocus();
-                      if(_formKeyPhoneNumber.currentState!.validate() && _eKYCController.cPhoneNumber.text.length == 12){
+                      if(widget.formKeyPhoneNumber.currentState!.validate() && _eKYCController.cPhoneNumber.text.length == 12){
                         await _eKYCController.autoSubmitPhoneNumber();
                       }
                     }

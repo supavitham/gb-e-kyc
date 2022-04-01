@@ -40,7 +40,7 @@ public class MainActivity extends FlutterActivity {
             getActivity().finish();
             System.exit(0);
         }
-        
+
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
                 .setMethodCallHandler((call, result) -> {
                     if (call.method.equals("getLivenessFacetec")) {
@@ -75,7 +75,7 @@ public class MainActivity extends FlutterActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
-        WindowManager.LayoutParams.FLAG_SECURE);
+                WindowManager.LayoutParams.FLAG_SECURE);
 
     }
 
@@ -152,4 +152,5 @@ public class MainActivity extends FlutterActivity {
             return this.isSuccess;
         }
     }
+
 }

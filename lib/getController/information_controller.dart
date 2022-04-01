@@ -12,7 +12,7 @@ import 'package:gb_e_kyc/widgets/errorMessages.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class InformationController extends GetxController{
+class InformationController extends GetxController {
   final _eKYCController = Get.put(EKYCController());
 
   final idCardController = TextEditingController();
@@ -30,6 +30,8 @@ class InformationController extends GetxController{
   var ocrFailedAll = false.obs;
   int? careerID;
   int? indexProvince, indexDistric, indexSubDistric;
+  List<int>? imgFrontIDCardBytes;
+  List<int>? imgBackIDCardBytes;
 
   File? imgFrontIDCard, imgBackIDCard;
   late String pathFrontCitizen;
@@ -41,27 +43,44 @@ class InformationController extends GetxController{
   var fileNameLiveness = ''.obs;
 
   setFirstName(String value) => firstNameController.text = value;
+
   setLastName(String value) => lastNameController.text = value;
+
   setAddress(String value) => addressController.text = value;
+
   setBirthday(String value) => birthdayController.text = value;
+
   setIDCard(String value) => idCardController.text = value;
+
   setLaserCode(String value) => ocrBackLaser.value = value;
+
   setCareerID(int value) => careerID = value;
+
   setWorkName(String value) => workNameController.text = value;
+
   setWorkAddress(String value) => workAddressController.text = value;
+
   setWorkAddressSearch(String value) => workAddressSerchController.text = value;
+
   setindexProvince(int value) => indexProvince = value;
+
   setindexDistric(int value) => indexDistric = value;
+
   setindexSubDistric(int value) => indexSubDistric = value;
+
   setFileFrontCitizen(String value) => pathFrontCitizen = value;
+
   setFileBackCitizen(String value) => pathBackCitizen = value;
+
   setFileSelfie(String value) => pathSelfie.value = value;
 
   verifyStepInfo(bool value) async {
-    print("SSSSSS ");
-    if(pathSelfie.isNotEmpty){
+    print("verifyStepInfo ");
+    if (pathSelfie.isNotEmpty) {
       print("SSSSSS 111");
       EasyLoading.show();
+      // setState(() => isLoading = true);
+
       final resFrontID = await PostAPI().callFormData(
         url: '$hostRegister/users/upload_file',
         headers: Authorization.auth2,
@@ -94,35 +113,25 @@ class InformationController extends GetxController{
       await File(pathBackCitizen).delete();
       await File(pathSelfie.value).delete();
 
-      var resCreateUser = await PostAPI().call(
-        url: '$hostRegister/users',
-        headers: Authorization.auth2,
-        body: {
-          "id_card": idCardController.text,
-          "first_name": firstNameController.text,
-          "last_name": lastNameController.text,
-          "address": addressController.text,
-          "birthday": birthdayController.text,
-          "pin": _eKYCController.cPin.text,
-          "send_otp_id": _eKYCController.sendOtpId.value,
-          "laser": ocrBackLaser.value,
-          "province_id": '$indexProvince',
-          "district_id": '$indexDistric',
-          "sub_district_id": '$indexSubDistric',
-          "career_id": '$careerID',
-          "work_name": workNameController.text,
-          "work_address": '${workAddressController.text} ${workAddressSerchController.text}',
-          "file_front_citizen": fileNameFrontID.value,
-          "file_back_citizen": fileNameBackID.value,
-          "file_selfie": fileNameSelfieID.value,
-          "file_liveness": fileNameLiveness.value,
-          // "imei": StoreState.deviceSerial.value,
-          // "fcm_token": StoreState.fcmToken.value,
-        },
-      );
+      var resCreateUser = await createUser();
 
       if (resCreateUser['success']) {
+        showDialog(
+          barrierDismissible: false,
+          context: Get.context!,
+          builder: (context) => CustomDialog(
+            title: 'save_success'.tr,
+            content: 'congratulations_now'.tr,
+            textConfirm: "back_to_main".tr,
+            onPressedConfirm: () {
+              Get.back();
+              Get.back();
+            },
+          ),
+        );
       } else {
+        // setState(() => isLoading = false);
+
         EasyLoading.dismiss();
         showDialog(
           barrierDismissible: false,
@@ -141,9 +150,39 @@ class InformationController extends GetxController{
           ),
         );
       }
-    }else{
+    } else {
       print("SSSSSS 2222");
       Get.put(EKYCController()).setPinStep4();
     }
+  }
+
+  Future<Map> createUser() async {
+    var resCreateUser = await PostAPI().call(
+      url: '$hostRegister/users',
+      headers: Authorization.auth2,
+      body: {
+        "id_card": idCardController.text,
+        "first_name": firstNameController.text,
+        "last_name": lastNameController.text,
+        "address": addressController.text,
+        "birthday": birthdayController.text,
+        "pin": '112233',
+        "send_otp_id": _eKYCController.sendOtpId.value,
+        "laser": ocrBackLaser.value,
+        "province_id": '$indexProvince',
+        "district_id": '$indexDistric',
+        "sub_district_id": '$indexSubDistric',
+        "career_id": '$careerID',
+        "work_name": workNameController.text,
+        "work_address": '${workAddressController.text} ${workAddressSerchController.text}',
+        "file_front_citizen": fileNameFrontID.value,
+        "file_back_citizen": fileNameBackID.value,
+        "file_selfie": fileNameSelfieID.value,
+        "file_liveness": fileNameLiveness.value,
+        "imei": StoreState.deviceSerial.value,
+        "fcm_token": StoreState.fcmToken.value,
+      },
+    );
+    return resCreateUser;
   }
 }

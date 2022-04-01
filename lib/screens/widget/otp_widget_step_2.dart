@@ -9,8 +9,9 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPWidget extends StatefulWidget {
+  final TextEditingController cOTP;
 
-  const OTPWidget({Key? key}) : super(key: key);
+  const OTPWidget({Key? key, required this.cOTP}) : super(key: key);
 
   @override
   State<OTPWidget> createState() => _OTPWidgetState();
@@ -19,7 +20,7 @@ class OTPWidget extends StatefulWidget {
 class _OTPWidgetState extends State<OTPWidget> {
   final _eKYCController = Get.find<EKYCController>();
   final _formKeyOTP = GlobalKey<FormState>();
-  final cOTP = TextEditingController();
+
   @override
   void initState() {
     print("aaaaaaa ");
@@ -31,10 +32,9 @@ class _OTPWidgetState extends State<OTPWidget> {
   void dispose() {
     print("dddddddd ");
     _eKYCController.errorController.close();
-    // _formKeyOTP.currentState?.dispose();
-    cOTP.dispose();
-    // _timer?.cancel();
-    // WidgetsBinding.instance!.removeObserver(this);
+    _formKeyOTP.currentState?.dispose();
+    widget.cOTP.clear();
+
     super.dispose();
   }
 
@@ -57,6 +57,8 @@ class _OTPWidgetState extends State<OTPWidget> {
           Form(
             key: _formKeyOTP,
             child: PinCodeTextField(
+              controller: widget.cOTP,
+              autoDisposeControllers: false,
               appContext: context,
               pastedTextStyle: const TextStyle(
                 color: Colors.black,
@@ -85,15 +87,14 @@ class _OTPWidgetState extends State<OTPWidget> {
               backgroundColor: Colors.white,
               enableActiveFill: true,
               errorAnimationController: _eKYCController.errorController,
-              controller: cOTP,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               boxShadows: const [BoxShadow(offset: Offset(0, 1), color: Colors.black12, blurRadius: 10)],
               onChanged: (v) {
                 _eKYCController.hasErrorOTP.value = false;
                 if (v.length == 6) {
-                  if (_formKeyOTP.currentState!.validate() && cOTP.value.text.length == 6) {
-                    _eKYCController.autoSubmitOTP();
+                  if (_formKeyOTP.currentState!.validate() && widget.cOTP.value.text.length == 6) {
+                    _eKYCController.autoSubmitOTP(widget.cOTP.text);
                   } else {
                     _eKYCController.errorController.add(ErrorAnimationType.shake);
                     _eKYCController.hasErrorOTP.value = true;
@@ -115,9 +116,9 @@ class _OTPWidgetState extends State<OTPWidget> {
               var otpId = await PostAPI().sendOTP(phoneNumber: txPhoneNumber, countryCode: countryCode);
 
               if (otpId['success']) {
-                _eKYCController.sendOtpId = otpId['response']['data']['send_otp_id'];
+                _eKYCController.sendOtpId.value = otpId['response']['data']['send_otp_id'];
                 _eKYCController.datetimeOTP = DateTime.parse(otpId['response']['data']['expiration_at']);
-                cOTP.clear();
+                widget.cOTP.clear();
                 _eKYCController.expiration.value = false;
               }
             },

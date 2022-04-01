@@ -69,6 +69,8 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
   String? birthDay;
   String? ocrBackLaser;
   bool ocrFailedAll = false;
+  List<int>? frontIDPathFile;
+  List<int>? backIDPathFile;
 
   callBackData() async {
     Map data = {};
@@ -83,26 +85,31 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
     data['frontIDPath'] = frontIDPath!;
     data['backIDPath'] = backIDPath!;
     data['ocrFailedAll'] = ocrFailedAll;
+    data['frontIDPathFile'] = frontIDPathFile;
+    data['backIDPathFile'] = backIDPathFile;
 
     // debugPrint(data);
     return data;
   }
 
   ocrThaiID({String? image, String? side}) async {
-    Dio dio = new Dio();
+    try{
+      Dio dio = new Dio();
+      dio.options.baseUrl = '$hostRegister/users/ocr-thailand-id-card';
+      dio.options.headers = {'Authorization2': authorization2};
 
-    dio.options.baseUrl = '$hostRegister/users/ocr-thailand-id-card';
-    dio.options.headers = {'Authorization2': authorization2};
+      FormData formData = new FormData.fromMap({"image": image, "side": side});
 
-    FormData formData = new FormData.fromMap({"image": image, "side": side});
+      var response = await dio.post(dio.options.baseUrl, data: formData).timeout(Duration(seconds: 30));
+      debugPrint('${dio.options.baseUrl}: ${response.data}');
 
-    var response = await dio.post(dio.options.baseUrl, data: formData).timeout(Duration(seconds: 30));
-    debugPrint('${dio.options.baseUrl}: ${response.data}');
-
-    if (response.data['success']) {
-      return response.data['response']['data']['result'];
+      if (response.data['success']) {
+        return response.data['response']['data']['result'];
+      }
+      return '';
+    }catch(e){
+      print("ocrThaiID $e");
     }
-    return '';
   }
 
   @override
@@ -479,6 +486,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
       await _controller!.takePicture().then((v) => frontIDPath = v.path);
 
       List<int> imageBytes = File(frontIDPath!).readAsBytesSync();
+      frontIDPathFile = imageBytes;
 
       String imgB64 = base64Encode(imageBytes);
       final resFront = await ocrThaiID(image: imgB64, side: "front");
@@ -554,6 +562,8 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
       await _controller!.takePicture().then((v) => backIDPath = v.path);
 
       List<int> imageBytes = File(backIDPath!).readAsBytesSync();
+      backIDPathFile = imageBytes;
+
       String imgB64 = base64Encode(imageBytes);
 
       final resBack = await ocrThaiID(image: imgB64, side: 'back');
