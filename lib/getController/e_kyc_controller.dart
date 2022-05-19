@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 enum StepKYC { one, two, three, four }
+enum MultiLanguage  {th,en}
 
 class SelectStepKYC {
   late StepKYC select;
@@ -23,7 +24,7 @@ class EKYCController extends GetxController {
   final cPin = TextEditingController();
 
   late StreamController<ErrorAnimationType> errorController;
-
+  var currentLanguage = MultiLanguage.th.obs;
   var selectStepKYC = StepKYC.one.obs;
   var processStepKYC = <SelectStepKYC>[].obs;
   var hasErrorOTP = false.obs;
