@@ -94,6 +94,19 @@ class InformationController extends GetxController {
 
       fileNameFrontID.value = resFrontID['response']['data']['file_name'];
 
+      final resBackID = await PostAPI().callFormData(
+        url: '$hostRegister/users/upload_file',
+        headers: Authorization.auth2,
+        files: [
+          http.MultipartFile.fromBytes(
+            'image',
+            File(pathBackCitizen).readAsBytesSync(),
+            filename: File(pathBackCitizen).path.split("/").last,
+          )
+        ],
+      );
+      fileNameBackID.value = resBackID['response']['data']['file_name'];
+
       final resSelfieID = await PostAPI().callFormData(
         url: '$hostRegister/users/upload_file',
         headers: Authorization.auth2,

@@ -42,6 +42,8 @@ Map<String, String> th() {
     "id_card_code": "รหัสบัตรประชาชน",
     "id_card_laserNo": "เลขหลังบัตร",
     "idcard_front": "ภาพหน้าบัตรประชาชน",
+    "idcard_back": "ภาพหลังบัตรประชาชน",
+    "idcard_selfie": "ภาพเซลฟี่พร้อมถือบัตร",
     "Keep_your_face_straight": "จัดวาง\nใบหน้าให้ตรง",
     "language": "th",
     "lang": "_th",

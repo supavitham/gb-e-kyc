@@ -42,6 +42,8 @@ Map<String, String> en() {
     "id_card_code": "ID Card Number",
     "id_card_laserNo": "Laser Number",
     "idcard_front": "Front of ID Card ",
+    "idcard_back": "Back of ID Card",
+    "idcard_selfie": "Selfie Show ID Card",
     "Keep_your_face_straight": "Keep your\nface straight",
     "language": "en",
     "lang": "",

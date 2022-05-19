@@ -23,14 +23,12 @@ class _OTPWidgetState extends State<OTPWidget> {
 
   @override
   void initState() {
-    print("aaaaaaa ");
     super.initState();
     _eKYCController.errorController = StreamController<ErrorAnimationType>();
   }
 
   @override
   void dispose() {
-    print("dddddddd ");
     _eKYCController.errorController.close();
     _formKeyOTP.currentState?.dispose();
     widget.cOTP.clear();
