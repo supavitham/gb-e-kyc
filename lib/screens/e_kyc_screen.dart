@@ -71,46 +71,46 @@ class _EKYCScreenState extends State<EKYCScreen> {
             color: Colors.black,
           ),
           actions: [
-            Container(
-              margin: EdgeInsets.all(12),
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(40)),
-              child: Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ...MultiLanguage.values.map((e) {
-                        bool selected = e == _eKYCController.currentLanguage.value;
-                        var index = MultiLanguage.values.indexOf(e);
-                        return Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _eKYCController.currentLanguage.value = e;
-                                _eKYCController.currentLanguage.value == MultiLanguage.th ? Get.updateLocale(Locale('th', 'TH')) : Get.updateLocale(Locale('en', 'EN'));
-                              },
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/${index == 0 ? selected ? "Thailand-flag" : "Thailand-flag-bw" : selected ? "United_Kingdom" : "United_Kingdom_bw"}.png'),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            ),
-                            if (index == 0)
-                              Text(
-                                "  ${selected ? "TH" : "EN"}  ",
-                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-                              )
-                          ],
-                        );
-                      }).toList()
-                    ],
-                  )),
-            )
+            // Container(
+            //   margin: EdgeInsets.all(12),
+            //   padding: EdgeInsets.all(4),
+            //   decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(40)),
+            //   child: Obx(() => Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           ...MultiLanguage.values.map((e) {
+            //             bool selected = e == _eKYCController.currentLanguage.value;
+            //             var index = MultiLanguage.values.indexOf(e);
+            //             return Row(
+            //               children: [
+            //                 GestureDetector(
+            //                   onTap: () {
+            //                     _eKYCController.currentLanguage.value = e;
+            //                     _eKYCController.currentLanguage.value == MultiLanguage.th ? Get.updateLocale(Locale('th', 'TH')) : Get.updateLocale(Locale('en', 'EN'));
+            //                   },
+            //                   child: Container(
+            //                     height: 30,
+            //                     width: 30,
+            //                     decoration: BoxDecoration(
+            //                       image: DecorationImage(
+            //                         image: AssetImage('assets/images/${index == 0 ? selected ? "Thailand-flag" : "Thailand-flag-bw" : selected ? "United_Kingdom" : "United_Kingdom_bw"}.png'),
+            //                         fit: BoxFit.fill,
+            //                       ),
+            //                       shape: BoxShape.circle,
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 if (index == 0)
+            //                   Text(
+            //                     "  ${selected ? "TH" : "EN"}  ",
+            //                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+            //                   )
+            //               ],
+            //             );
+            //           }).toList()
+            //         ],
+            //       )),
+            // )
           ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(80),
