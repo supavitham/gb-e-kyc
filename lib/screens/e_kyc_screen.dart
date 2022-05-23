@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gb_e_kyc/api/httpClient/pathUrl.dart';
 import 'package:gb_e_kyc/api/post.dart';
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
@@ -41,6 +42,8 @@ class _EKYCScreenState extends State<EKYCScreen> {
 
   @override
   void initState() {
+    dotenv.load(fileName: "assets/.env");
+
     initDeviceSerial();
     super.initState();
   }
