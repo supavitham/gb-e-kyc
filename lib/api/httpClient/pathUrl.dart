@@ -26,6 +26,9 @@ Map errorNotFound = {
 enum Authorization { token, auth2, none }
 
 Map<String, String> setHeaders(Authorization headers) {
+  print("test >>>> ${authorization2 ?? ""}");
+  print("test222 >>>> ${hostRegister ?? ""}");
+
   switch (headers) {
     case Authorization.token:
       return {HttpHeaders.authorizationHeader: StoreState.token.value, 'lang': 'language'.tr};
