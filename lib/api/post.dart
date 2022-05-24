@@ -22,7 +22,7 @@ class PostAPI extends HttpInterceptedClient {
     required Map<String, String> body,
   }) async {
     try {
-      // EasyLoading.show();
+      EasyLoading.show();
       final response = await client.post(Uri.parse(url), headers: setHeaders(headers), body: body).timeout(const Duration(seconds: 30));
 
       if (response.statusCode == 200) {

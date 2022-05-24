@@ -35,7 +35,7 @@ class _EKYCButtonWidgetState extends State<EKYCButtonWidget> {
             : widget.boxDecorationContainer,
         child: Center(
           child: Text(
-            "${widget.title ?? "KYC 2"}",
+            "${widget.title ?? "KYC"}",
             style: widget.textStyle == null ? TextStyle(fontSize: 20, color: Colors.black) : widget.textStyle,
           ),
         ),

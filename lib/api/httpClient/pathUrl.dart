@@ -4,13 +4,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gb_e_kyc/api/storeState.dart';
 import 'package:get/get.dart';
 
-String hostRegister = "https://api-uat.gbwallet.co/register-api";
-String hostGateway = "https://api-uat.gbwallet.co/gateway-api";
-String authorization2 = "rOewM45nfCS7nYpv";
-
-// String? hostRegister = dotenv.env['host3003'];
-// String? hostGateway = dotenv.env['host3006'];
-// String? authorization2 = dotenv.env['authorization2'];
+String? hostRegister = dotenv.env['host3003'];
+String? hostGateway = dotenv.env['host3006'];
+String? authorization2 = dotenv.env['authorization2'];
 
 Map messageOffline = {
   "success": false,
@@ -30,9 +26,6 @@ Map errorNotFound = {
 enum Authorization { token, auth2, none }
 
 Map<String, String> setHeaders(Authorization headers) {
-  print("test >>>> ${authorization2 ?? ""}");
-  print("test222 >>>> ${hostRegister ?? ""}");
-
   switch (headers) {
     case Authorization.token:
       return {HttpHeaders.authorizationHeader: StoreState.token.value, 'lang': 'language'.tr};
