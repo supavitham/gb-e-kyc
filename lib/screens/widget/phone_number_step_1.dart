@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gb_e_kyc/getController/e_kyc_controller.dart';
 import 'package:gb_e_kyc/utility/format.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class PhoneNumberWidget extends StatefulWidget {
   final GlobalKey<FormState> formKeyPhoneNumber;
@@ -36,6 +37,8 @@ class _PhoneNumberWidgetState extends State<PhoneNumberWidget> {
             ),
             const SizedBox(height: 10),
             Column(children: [
+              Lottie.network('https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
+
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
