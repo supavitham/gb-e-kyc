@@ -93,7 +93,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
   }
 
   ocrThaiID({String? image, String? side}) async {
-    try{
+    try {
       Dio dio = new Dio();
       dio.options.baseUrl = '$hostRegister/users/ocr-thailand-id-card';
       dio.options.headers = {'Authorization2': authorization2};
@@ -107,7 +107,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
         return response.data['response']['data']['result'];
       }
       return '';
-    }catch(e){
+    } catch (e) {
       print("ocrThaiID $e");
     }
   }
@@ -122,7 +122,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
     visibleFront = widget.isFront;
     if (noFrame!) _direction = CameraLensDirection.front;
     _startLiveFeed();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox renderBox = _globalKey.currentContext?.findRenderObject() as RenderBox;
       size = renderBox.size;
       offset = renderBox.localToGlobal(Offset.zero);
@@ -139,15 +139,17 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
   Future _startLiveFeed() async {
     if (await Permission.camera.request().isGranted) {
       final camera = await availableCameras().then(
-            (List<CameraDescription> cameras) => cameras.firstWhere(
-              (CameraDescription camera) => camera.lensDirection == _direction,
+        (List<CameraDescription> cameras) => cameras.firstWhere(
+          (CameraDescription camera) => camera.lensDirection == _direction,
         ),
       );
+      print(">>>>111 $_controller");
       _controller = CameraController(
         camera,
         ResolutionPreset.high,
         enableAudio: false,
       );
+      print(">>>>2222 $_controller");
       _controller!.initialize().then((_) {
         if (!mounted) {
           return;
@@ -201,10 +203,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
     isBusy = true;
     final recognisedText = await textDetector.processImage(inputImage);
     print(recognisedText.text);
-    if (RegExp(r'Thai National|dentification Number').hasMatch(recognisedText.text) &&
-        RegExp(r'of lssue|of Expiry').hasMatch(recognisedText.text) &&
-        !_takeFront &&
-        visibleFront!) {
+    if (RegExp(r'Thai National|dentification Number').hasMatch(recognisedText.text) && RegExp(r'of lssue|of Expiry').hasMatch(recognisedText.text) && !_takeFront && visibleFront!) {
       _takeFront = true;
       Future.delayed(Duration(seconds: 1), () {
         _onCaptureFrontPressed();
@@ -252,8 +251,8 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
         final Size imageSize = Size(image.width.toDouble(), image.height.toDouble());
 
         final camera = await availableCameras().then(
-              (List<CameraDescription> cameras) => cameras.firstWhere(
-                (CameraDescription camera) => camera.lensDirection == _direction,
+          (List<CameraDescription> cameras) => cameras.firstWhere(
+            (CameraDescription camera) => camera.lensDirection == _direction,
           ),
         );
         final imageRotation = InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ?? InputImageRotation.Rotation_0deg;
@@ -261,7 +260,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
         final inputImageFormat = InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21;
 
         final planeData = image.planes.map(
-              (Plane plane) {
+          (Plane plane) {
             return InputImagePlaneMetadata(
               bytesPerRow: plane.bytesPerRow,
               height: plane.height,
@@ -295,39 +294,39 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
           child: widget.enableButton!
               ? Container(height: 120, width: double.infinity, color: Colors.white, child: _cameraNoORC())
               : Container(
-            height: 120,
-            color: Colors.white,
-            child: Row(children: [
-              hideFlash
-                  ? Expanded(child: SizedBox())
-                  : Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    if (_controller!.value.flashMode == FlashMode.off) {
-                      _controller!.setFlashMode(FlashMode.torch);
-                    } else {
-                      _controller!.setFlashMode(FlashMode.off);
-                    }
-                    setState(() => flashStatus = !flashStatus);
-                  },
-                  child: Icon(
-                    flashStatus ? Icons.flash_on : Icons.flash_off,
-                  ),
+                  height: 120,
+                  color: Colors.white,
+                  child: Row(children: [
+                    hideFlash
+                        ? Expanded(child: SizedBox())
+                        : Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                if (_controller!.value.flashMode == FlashMode.off) {
+                                  _controller!.setFlashMode(FlashMode.torch);
+                                } else {
+                                  _controller!.setFlashMode(FlashMode.off);
+                                }
+                                setState(() => flashStatus = !flashStatus);
+                              },
+                              child: Icon(
+                                flashStatus ? Icons.flash_on : Icons.flash_off,
+                              ),
+                            ),
+                          ),
+                    Expanded(
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.lens,
+                          color: Colors.black,
+                        ),
+                        backgroundColor: Colors.white,
+                        onPressed: visibleFront! ? _onCaptureFrontPressed : _onCaptureBackPressed,
+                      ),
+                    ),
+                    Expanded(child: SizedBox())
+                  ]),
                 ),
-              ),
-              Expanded(
-                child: FloatingActionButton(
-                  child: Icon(
-                    Icons.lens,
-                    color: Colors.black,
-                  ),
-                  backgroundColor: Colors.white,
-                  onPressed: visibleFront! ? _onCaptureFrontPressed : _onCaptureBackPressed,
-                ),
-              ),
-              Expanded(child: SizedBox())
-            ]),
-          ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(20, 0, 20, 80),
@@ -356,16 +355,16 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
           _controller!,
           child: !noFrame!
               ? SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Opacity(
-              opacity: 0.8,
-              child: Image.asset(
-                isFront ? 'assets/images/crop_front_id_${'language'.tr}.png' : 'assets/images/crop_back_id_${'language'.tr}.png',
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          )
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Opacity(
+                    opacity: 0.8,
+                    child: Image.asset(
+                      isFront ? 'assets/images/crop_front_id_${'language'.tr}.png' : 'assets/images/crop_back_id_${'language'.tr}.png',
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                )
               : SizedBox(),
         ),
       ),
@@ -440,18 +439,18 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
       noFrame!
           ? Expanded(child: SizedBox())
           : Expanded(
-        child: GestureDetector(
-          onTap: () {
-            if (_controller!.value.flashMode == FlashMode.off) {
-              _controller!.setFlashMode(FlashMode.torch);
-            } else {
-              _controller!.setFlashMode(FlashMode.off);
-            }
-            setState(() => flashStatus = !flashStatus);
-          },
-          child: Icon(flashStatus ? Icons.flash_on : Icons.flash_off),
-        ),
-      ),
+              child: GestureDetector(
+                onTap: () {
+                  if (_controller!.value.flashMode == FlashMode.off) {
+                    _controller!.setFlashMode(FlashMode.torch);
+                  } else {
+                    _controller!.setFlashMode(FlashMode.off);
+                  }
+                  setState(() => flashStatus = !flashStatus);
+                },
+                child: Icon(flashStatus ? Icons.flash_on : Icons.flash_off),
+              ),
+            ),
       Expanded(
         child: FloatingActionButton(
           child: Icon(
@@ -573,45 +572,45 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
         final convertFrontBirthdayM = ocrFrontBirthdayM == 'Jan.'
             ? '01'
             : ocrFrontBirthdayM == 'Feb.'
-            ? '02'
-            : ocrFrontBirthdayM == 'Mar.'
-            ? '03'
-            : ocrFrontBirthdayM == 'Apr.'
-            ? '04'
-            : ocrFrontBirthdayM == 'May'
-            ? '05'
-            : ocrFrontBirthdayM == 'Jun.'
-            ? '06'
-            : ocrFrontBirthdayM == 'Jul.'
-            ? '07'
-            : ocrFrontBirthdayM == 'Aug.'
-            ? '08'
-            : ocrFrontBirthdayM == 'Sep.'
-            ? '09'
-            : ocrFrontBirthdayM == 'Oct.'
-            ? '10'
-            : ocrFrontBirthdayM == 'Nov.'
-            ? '11'
-            : '12';
+                ? '02'
+                : ocrFrontBirthdayM == 'Mar.'
+                    ? '03'
+                    : ocrFrontBirthdayM == 'Apr.'
+                        ? '04'
+                        : ocrFrontBirthdayM == 'May'
+                            ? '05'
+                            : ocrFrontBirthdayM == 'Jun.'
+                                ? '06'
+                                : ocrFrontBirthdayM == 'Jul.'
+                                    ? '07'
+                                    : ocrFrontBirthdayM == 'Aug.'
+                                        ? '08'
+                                        : ocrFrontBirthdayM == 'Sep.'
+                                            ? '09'
+                                            : ocrFrontBirthdayM == 'Oct.'
+                                                ? '10'
+                                                : ocrFrontBirthdayM == 'Nov.'
+                                                    ? '11'
+                                                    : '12';
         final convertFrontBirthdayD = ocrFrontBirthdayD == '1'
             ? '01'
             : ocrFrontBirthdayD == '2'
-            ? '02'
-            : ocrFrontBirthdayD == '3'
-            ? '03'
-            : ocrFrontBirthdayD == '4'
-            ? '04'
-            : ocrFrontBirthdayD == '5'
-            ? '05'
-            : ocrFrontBirthdayD == '6'
-            ? '06'
-            : ocrFrontBirthdayD == '7'
-            ? '07'
-            : ocrFrontBirthdayD == '8'
-            ? '08'
-            : ocrFrontBirthdayD == '9'
-            ? '09'
-            : ocrFrontBirthdayD;
+                ? '02'
+                : ocrFrontBirthdayD == '3'
+                    ? '03'
+                    : ocrFrontBirthdayD == '4'
+                        ? '04'
+                        : ocrFrontBirthdayD == '5'
+                            ? '05'
+                            : ocrFrontBirthdayD == '6'
+                                ? '06'
+                                : ocrFrontBirthdayD == '7'
+                                    ? '07'
+                                    : ocrFrontBirthdayD == '8'
+                                        ? '08'
+                                        : ocrFrontBirthdayD == '9'
+                                            ? '09'
+                                            : ocrFrontBirthdayD;
         birthDay = '$convertFrontBirthdayD/$convertFrontBirthdayM/$ocrFrontBirthdayY';
 
         var verifyDOPA = await PostAPI().call(

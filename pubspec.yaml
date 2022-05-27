@@ -58,3 +58,8 @@ flutter:
     - assets/icons/
     - assets/thai-province-data.json      
     - .env
+
+#  module:
+#    androidX: true
+#    androidPackage: com.gb_e_kyc.gb_e_kyc
+#    iosBundleIdentifier: com.gbekyc.gbEKyc

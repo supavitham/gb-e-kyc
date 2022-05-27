@@ -4,9 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gb_e_kyc/api/storeState.dart';
 import 'package:get/get.dart';
 
-String? hostRegister = dotenv.env['host3003'];
-String? hostGateway = dotenv.env['host3006'];
-String? authorization2 = dotenv.env['authorization2'];
+String? hostRegister = "https://api-uat.gbwallet.co/register-api";
+String? hostGateway = "https://api-uat.gbwallet.co/gateway-api";
+String? authorization2 = "rOewM45nfCS7nYpv";
+
+// String? hostRegister = dotenv.env['host3003'];
+// String? hostGateway = dotenv.env['host3006'];
+// String? authorization2 = dotenv.env['authorization2'];
 
 Map messageOffline = {
   "success": false,
