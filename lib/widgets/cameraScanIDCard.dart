@@ -122,7 +122,7 @@ class _CameraScanIDCardState extends State<CameraScanIDCard> {
     visibleFront = widget.isFront;
     if (noFrame!) _direction = CameraLensDirection.front;
     _startLiveFeed();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox renderBox = _globalKey.currentContext?.findRenderObject() as RenderBox;
       size = renderBox.size;
       offset = renderBox.localToGlobal(Offset.zero);

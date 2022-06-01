@@ -17,9 +17,9 @@
 		9A17B36427F166050046725A /* LivenessCheckProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36327F166050046725A /* LivenessCheckProcessor.swift */; };
 		9A17B36627F1662B0046725A /* ProcesingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36527F1662B0046725A /* ProcesingDelegate.swift */; };
 		9A17B36827F166640046725A /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17B36727F166640046725A /* ThemeHelpers.swift */; };
+		9A1AA4D128476E1900810602 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A1AA4D028476E1900810602 /* GoogleService-Info.plist */; };
 		9A68DBBC27EDB0E900ED3211 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A68DBBB27EDB0E900ED3211 /* Config.swift */; };
 		9A68DBC027EDB16D00ED3211 /* SampleAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A68DBBF27EDB16D00ED3211 /* SampleAppViewController.swift */; };
-		9AAA95EB27F1676C00FD18E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */; };
 		9ACB042B27EDC700008B25DC /* FaceTecSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */; };
 		9ACB042C27EDC700008B25DC /* FaceTecSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9ACB042F27EDCCDC008B25DC /* Processors in Resources */ = {isa = PBXBuildFile; fileRef = 9ACB042E27EDCCDC008B25DC /* Processors */; };
@@ -58,9 +58,9 @@
 		9A17B36327F166050046725A /* LivenessCheckProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LivenessCheckProcessor.swift; path = Runner/Processors/LivenessCheckProcessor.swift; sourceTree = "<group>"; };
 		9A17B36527F1662B0046725A /* ProcesingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProcesingDelegate.swift; path = Runner/Processors/ProcesingDelegate.swift; sourceTree = "<group>"; };
 		9A17B36727F166640046725A /* ThemeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThemeHelpers.swift; path = Runner/Processors/Helpers/ThemeHelpers.swift; sourceTree = "<group>"; };
+		9A1AA4D028476E1900810602 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9A68DBBB27EDB0E900ED3211 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9A68DBBF27EDB16D00ED3211 /* SampleAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppViewController.swift; sourceTree = "<group>"; };
-		9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9ACB042927EDBF74008B25DC /* FaceTecSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FaceTecSDK.framework; sourceTree = "<group>"; };
 		9ACB042D27EDCBDE008B25DC /* Runner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		9ACB042E27EDCCDC008B25DC /* Processors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Processors; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				9AAA95EA27F1676C00FD18E4 /* GoogleService-Info.plist */,
+				9A1AA4D028476E1900810602 /* GoogleService-Info.plist */,
 				9ACB042E27EDCCDC008B25DC /* Processors */,
 				9ACB042D27EDCBDE008B25DC /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
@@ -222,7 +222,7 @@
 				9ACB042F27EDCCDC008B25DC /* Processors in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
-				9AAA95EB27F1676C00FD18E4 /* GoogleService-Info.plist in Resources */,
+				9A1AA4D128476E1900810602 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
